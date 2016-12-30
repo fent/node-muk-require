@@ -1,8 +1,8 @@
-# muk
+# muk-require
 
-[![Build Status](https://secure.travis-ci.org/fent/node-muk.svg)](http://travis-ci.org/fent/node-muk)
-[![Dependency Status](https://gemnasium.com/fent/node-muk.svg)](https://gemnasium.com/fent/node-muk)
-[![codecov](https://codecov.io/gh/fent/node-muk/branch/master/graph/badge.svg)](https://codecov.io/gh/fent/node-muk)
+[![Build Status](https://secure.travis-ci.org/fent/node-muk-require.svg)](http://travis-ci.org/fent/node-muk-require)
+[![Dependency Status](https://gemnasium.com/fent/node-muk-require.svg)](https://gemnasium.com/fent/node-muk-require)
+[![codecov](https://codecov.io/gh/fent/node-muk-require/branch/master/graph/badge.svg)](https://codecov.io/gh/fent/node-muk-require)
 
 ![muk](muk.gif)
 
@@ -25,7 +25,7 @@ var mockedRequest = function(url, options, callback) {
   // mock a request here
 };
 
-var foo = muk('./foo', {
+var foo = mukRequire('./foo', {
   request: mockedRequest
 });
 ```
@@ -48,40 +48,13 @@ exports.attack = 'sludge attack!';
 
 **test.js**
 ```js
-var foo = muk('./some/where/else/foo', { './bar': 'hey!!' });
-```
-
-Comes with object method mocking too.
-
-```js
-var fs = require('fs');
-var muk = require('muk');
-
-muk(fs, 'readFile', function(path, callback) {
-  process.nextTick(callback.bind(null, null, 'file contents here'));
-});
-```
-
-Check if member has been mocked.
-
-```js
-muk.isMocked(fs, 'readFile'); // true
-```
-
-Restore all mocked methods after tests.
-
-```js
-muk.restore();
-
-fs.readFile(file, function(err, data) {
-  // will actually read from `file`
-});
+var foo = mukRequire('./some/where/else/foo', { './bar': 'hey!!' });
 ```
 
 
 # Install
 
-    npm install muk
+    npm install muk-require
 
 
 # Tests

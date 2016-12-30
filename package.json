@@ -1,15 +1,15 @@
 {
-  "name": "muk",
-  "description": "Mock object methods and dependencies.",
+  "name": "muk-require",
+  "description": "Mock object dependencies.",
   "keywords": [
     "test",
     "mock",
     "dependency"
   ],
-  "version": "0.5.3",
+  "version": "0.1.0",
   "repository": {
     "type": "git",
-    "url": "git://github.com/fent/node-muk.git"
+    "url": "git://github.com/fent/node-muk-require.git"
   },
   "author": "Roly Fentanes (https://github.com/fent)",
   "main": "./lib/index.js",
@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "mocha": "*",
-    "istanbul": "0"
+    "istanbul": "*"
   },
   "license": "MIT",
   "files": [
