@@ -1,6 +1,6 @@
 {
   "name": "muk-require",
-  "description": "Mock object dependencies.",
+  "description": "Mock dependencies.",
   "keywords": [
     "test",
     "mock",
