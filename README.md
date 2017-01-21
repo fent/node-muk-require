@@ -25,7 +25,7 @@ var mockedRequest = function(url, options, callback) {
   // mock a request here
 };
 
-var foo = mukRequire('./foo', {
+var foo = muk('./foo', {
   request: mockedRequest
 });
 ```
@@ -48,7 +48,8 @@ exports.attack = 'sludge attack!';
 
 **test.js**
 ```js
-var foo = mukRequire('./some/where/else/foo', { './bar': 'hey!!' });
+var muk = require('muk-require');
+var foo = muk('./some/where/else/foo', { './bar': 'hey!!' });
 ```
 
 
