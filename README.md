@@ -59,7 +59,7 @@ var foo = muk('./some/where/else/foo', { './bar': 'hey!!' });
 
 
 # Tests
-Tests are written with [mocha](http://visionmedia.github.com/mocha/)
+Tests are written with [mocha](https://mochajs.org)
 
 ```bash
 npm test
