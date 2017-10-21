@@ -1,5 +1,7 @@
 # muk-require
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/fent/node-muk-require.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://secure.travis-ci.org/fent/node-muk-require.svg)](http://travis-ci.org/fent/node-muk-require)
 [![Dependency Status](https://david-dm.org/fent/node-muk-require.svg)](https://david-dm.org/fent/node-muk-require)
 [![codecov](https://codecov.io/gh/fent/node-muk-require/branch/master/graph/badge.svg)](https://codecov.io/gh/fent/node-muk-require)
