@@ -1,7 +1,7 @@
-module.exports = function(path, callback) {
+module.exports = (path, callback) => {
   // tests that the `require()` calls work asynchronously
   // without having to edit `require.cache`
-  process.nextTick(function() {
+  process.nextTick(() => {
     callback(null, require(path));
   });
 };

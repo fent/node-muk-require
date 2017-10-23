@@ -12,20 +12,20 @@ Mock dependencies.
 
 **foo.js**
 ```js
-var request = require('request');
+const request = require('request');
 
-module.exports = function foo(url) {
-  // do something with request
+module.exports = (url) => {
+  // Do something with request.
 };
 ```
 
 **test.js**
 ```js
-var mockedRequest = function(url, options, callback) {
-  // mock a request here
+var mockedRequest = (url, options, callback) => {
+  // Mock a request here.
 };
 
-var foo = muk('./foo', {
+const foo = muk('./foo', {
   request: mockedRequest
 });
 ```
@@ -34,10 +34,10 @@ You can also mock modules required with a relative path.
 
 **some/where/else/foo.js**
 ```js
-var bar = require('./bar');
+const bar = require('./bar');
 
-module.exports = function() {
-  // do something with bar
+module.exports = () => {
+  // Do something with bar.
 };
 ```
 
@@ -48,8 +48,8 @@ exports.attack = 'sludge attack!';
 
 **test.js**
 ```js
-var muk = require('muk-require');
-var foo = muk('./some/where/else/foo', { './bar': 'hey!!' });
+const muk = require('muk-require');
+const foo = muk('./some/where/else/foo', { './bar': 'hey!!' });
 ```
 
 
