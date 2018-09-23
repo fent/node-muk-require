@@ -2,10 +2,10 @@ const muk    = require('..');
 const assert = require('assert');
 
 
-function testMockDependency(dir, filename) {
-  var deps = {};
-  var mock = deps[filename] = { existsSync: () => true };
-  var original;
+const testMockDependency = (dir, filename) => {
+  const deps = {};
+  const mock = deps[filename] = { existsSync: () => true };
+  let original;
 
   it('Original loads without mock', (done) => {
     require(dir)(filename, (err, result) => {
@@ -38,7 +38,7 @@ function testMockDependency(dir, filename) {
       done();
     });
   });
-}
+};
 
 
 describe('Mock required user land dependency', () => {

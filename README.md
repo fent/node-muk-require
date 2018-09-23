@@ -21,7 +21,7 @@ module.exports = (url) => {
 
 **test.js**
 ```js
-var mockedRequest = (url, options, callback) => {
+const mockedRequest = (url, options, callback) => {
   // Mock a request here.
 };
 
