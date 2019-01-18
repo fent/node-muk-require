@@ -21,11 +21,16 @@ module.exports = (url) => {
 
 **test.js**
 ```js
+const request = require('request')
+
 const mockedRequest = (url, options, callback) => {
-  // Mock a request here.
+  // Log all requests.
+  console.log('Request made:', url);
+  request(url, options, callback)
 };
 
 const foo = muk('./foo', {
+  // Will overwrite all requires of "request" with our own version.
   request: mockedRequest
 });
 ```
