@@ -57,7 +57,7 @@ describe('Mock required relative file in a different dir', () => {
   require('./dir')('./custom', './bar');
 });
 
-describe.only('Mock modules required by children too', () => {
+describe('Mock modules required by children too', () => {
   it('Mocks dependency in both parent and children', () => {
     let mymock = {};
     muk('./custom/parent.js', { 'fs': mymock })((fs, child) => {
