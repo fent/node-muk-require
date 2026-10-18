@@ -1,7 +1,7 @@
 # muk-require
 
-[![Build Status](https://secure.travis-ci.org/fent/node-muk-require.svg)](http://travis-ci.org/fent/node-muk-require)
-![Depfu](https://img.shields.io/depfu/fent/node-muk-require)
+[![npm](https://img.shields.io/npm/v/muk-require)](https://www.npmjs.com/package/muk-require)
+[![Node.js CI](https://github.com/fent/node-muk-require/actions/workflows/nodejs.yml/badge.svg)](https://github.com/fent/node-muk-require/actions/workflows/nodejs.yml)
 [![codecov](https://codecov.io/gh/fent/node-muk-require/branch/master/graph/badge.svg)](https://codecov.io/gh/fent/node-muk-require)
 
 ![muk](muk.gif)
