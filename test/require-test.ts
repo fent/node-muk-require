@@ -1,28 +1,32 @@
-const muk    = require('..');
-const assert = require('assert');
+import muk from '..';
+import assert from 'assert';
+import Module from 'module';
 
 
-const testMockDependency = (dir, filename) => {
-  const deps = {};
+const testMockDependency = (dir: string, filename: string) => {
+  const deps: Record<string, any> = {};
   const mock = deps[filename] = { existsSync: () => true };
-  let original;
+  let original: Module;
 
   it('Original loads without mock', (done) => {
-    require(dir)(filename, (err, result) => {
+    require(dir)(filename, (err: Error | null, result: Module) => {
+      assert.ifError(err);
       original = result;
       done();
     });
   });
 
   it('Correctly mocks dependency', (done) => {
-    muk(dir, deps)(filename, (err, result) => {
+    muk(dir, deps)(filename, (err: Error | null, result: Module) => {
+      assert.ifError(err);
       assert.equal(result, mock, 'returned module is mocked object');
       done();
     });
   });
 
   it('Correctly requires non-mocked dependency', (done) => {
-    muk(dir, deps)('assert', (err, result) => {
+    muk(dir, deps)('assert', (err: Error | null, result: Module) => {
+      assert.ifError(err);
       assert.equal(assert, result,
         'returned module is the same one used in these tests');
       done();
@@ -32,7 +36,8 @@ const testMockDependency = (dir, filename) => {
   it('Original module is restored when require() is called', (done) => {
     delete require.cache[require.resolve(dir)];
 
-    require(dir)(filename, (err, result) => {
+    require(dir)(filename, (err: Error | null, result: Module) => {
+      assert.ifError(err);
       assert.equal(result, original,
         'requiring module again returns orignal module');
       done();
@@ -60,7 +65,7 @@ describe('Mock required relative file in a different dir', () => {
 describe('Mock modules required by children too', () => {
   it('Mocks dependency in both parent and children', () => {
     let mymock = {};
-    muk('./custom/parent.js', { 'fs': mymock })((fs, child) => {
+    muk('./custom/parent.js', { 'fs': mymock })((fs: Module, child: Module) => {
       assert.equal(fs, mymock);
       assert.equal(child, mymock);
     });
