@@ -32,9 +32,11 @@ export default function mukRequire(filename: string, deps: Record<string, any>):
   m.paths = nodeModulePaths(path.dirname(filename));
 
   // Load children.
+  const previousCache: Record<string, Module | undefined> = {};
   const children: Record<string, Module> = {};
   for (let key in deps) {
     const childpath = resolveFilename(key, m);
+    previousCache[childpath] = require.cache[childpath];
     const child = children[childpath] = new Module(childpath, m);
     require.cache[childpath] = child;
     child.paths = nodeModulePaths(path.dirname(childpath));
@@ -62,7 +64,11 @@ export default function mukRequire(filename: string, deps: Record<string, any>):
   delete require.cache[filename];
   for (let key in deps) {
     let childpath = resolveFilename(key, m);
-    delete require.cache[childpath];
+    if (previousCache[childpath]) {
+      require.cache[childpath] = previousCache[childpath];
+    } else {
+      delete require.cache[childpath];
+    }
   }
 
   return m.exports;

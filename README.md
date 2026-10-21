@@ -8,7 +8,7 @@
 
 # Usage
 
-Mock dependencies.
+Mock CommonJS dependencies. Note that this module only mocks `require()` calls in CommonJS modules, not ES module `import`s.
 
 **foo.js**
 ```js
