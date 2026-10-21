@@ -47,7 +47,7 @@ const testMockDependency = (dir: string, filename: string) => {
 
 
 describe('Mock required user land dependency', () => {
-  testMockDependency('./custom', 'mocha');
+  testMockDependency('./custom', 'nyc');
 });
 
 describe('Mock require native module', () => {
