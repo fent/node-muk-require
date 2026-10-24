@@ -1,11 +1,10 @@
-import muk from '..';
 import assert from 'assert';
-import Module from 'module';
-
+import type Module from 'module';
+import muk from '..';
 
 const testMockDependency = (dir: string, filename: string) => {
-  const deps: Record<string, any> = {};
-  const mock = deps[filename] = { existsSync: () => true };
+  const mock = { existsSync: () => true };
+  const deps: Record<string, any> = { [filename]: mock };
   let original: Module;
 
   it('Original loads without mock', (done) => {
@@ -27,8 +26,11 @@ const testMockDependency = (dir: string, filename: string) => {
   it('Correctly requires non-mocked dependency', (done) => {
     muk(dir, deps)('assert', (err: Error | null, result: Module) => {
       assert.ifError(err);
-      assert.equal(assert, result,
-        'returned module is the same one used in these tests');
+      assert.equal(
+        assert,
+        result,
+        'returned module is the same one used in these tests',
+      );
       done();
     });
   });
@@ -38,13 +40,15 @@ const testMockDependency = (dir: string, filename: string) => {
 
     require(dir)(filename, (err: Error | null, result: Module) => {
       assert.ifError(err);
-      assert.equal(result, original,
-        'requiring module again returns orignal module');
+      assert.equal(
+        result,
+        original,
+        'requiring module again returns orignal module',
+      );
       done();
     });
   });
 };
-
 
 describe('Mock required user land dependency', () => {
   testMockDependency('./custom', 'nyc');
@@ -64,8 +68,8 @@ describe('Mock required relative file in a different dir', () => {
 
 describe('Mock modules required by children too', () => {
   it('Mocks dependency in both parent and children', () => {
-    let mymock = {};
-    muk('./custom/parent.js', { 'fs': mymock })((fs: Module, child: Module) => {
+    const mymock = {};
+    muk('./custom/parent.js', { fs: mymock })((fs: Module, child: Module) => {
       assert.equal(fs, mymock);
       assert.equal(child, mymock);
     });
