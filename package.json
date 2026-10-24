@@ -16,16 +16,19 @@
   "scripts": {
     "prepare": "tsc -p tsconfig.json",
     "build": "tsc -p tsconfig.json",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
     "test": "nyc --extension .ts --reporter=lcov --reporter=text-summary npm run test:unit",
     "test:unit": "mocha --require ts-node/register test/*-test.ts"
   },
   "devDependencies": {
-    "@types/mocha": "^9.1.0",
-    "@types/node": "^17.0.23",
+    "@biomejs/biome": "^2.5.15",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^20.1.2",
     "mocha": "^12.0.3",
     "nyc": "^18.0.0",
-    "ts-node": "^10.7.0",
-    "typescript": "^4.6.3"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
   },
   "engines": {
     "node": ">=6"
