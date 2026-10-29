@@ -1,5 +1,5 @@
-import Module from 'module';
-import path from 'path';
+import Module from 'node:module';
+import path from 'node:path';
 
 // This module uses a few privately defined methods inside of the Module module.
 // The types for the module don't contain these non-public methods, so we define them here
@@ -22,10 +22,12 @@ function nodeModulePaths(pathname: string): string[] {
  * @param {string} filename
  * @param {Object} deps
  */
-export default function mukRequire(
+// biome-ignore lint/suspicious/noExplicitAny: dynamic module exports
+export default function mukRequire<T = any>(
   filename: string,
+  // biome-ignore lint/suspicious/noExplicitAny: dynamic module dependencies
   deps: Record<string, any>,
-): any {
+): T {
   filename = resolveFilename(filename, module.parent);
   // @ts-expect-error
   const m = new Module(filename, module.parent);

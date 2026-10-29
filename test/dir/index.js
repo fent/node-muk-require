@@ -1,5 +1,5 @@
 const muk = require('../..');
-const assert = require('assert');
+const assert = require('node:assert');
 
 module.exports = (dir, filename) => {
   let original;

@@ -1,10 +1,10 @@
-import assert from 'assert';
-import type Module from 'module';
+import assert from 'node:assert';
+import type Module from 'node:module';
 import muk from '..';
 
 const testMockDependency = (dir: string, filename: string) => {
   const mock = { existsSync: () => true };
-  const deps: Record<string, any> = { [filename]: mock };
+  const deps: Record<string, unknown> = { [filename]: mock };
   let original: Module;
 
   it('Original loads without mock', (done) => {
