@@ -18,9 +18,6 @@ function nodeModulePaths(pathname: string): string[] {
 
 /**
  * Mocks a call to `require()`
- *
- * @param {string} filename
- * @param {Object} deps
  */
 // biome-ignore lint/suspicious/noExplicitAny: dynamic module exports
 export default function mukRequire<T = any>(
