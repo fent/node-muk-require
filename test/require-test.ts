@@ -1,6 +1,6 @@
 import assert from 'node:assert';
 import type Module from 'node:module';
-import muk from '..';
+import muk from '../src';
 
 type MockCallback = (err: Error | null, result: Module) => void;
 type MockFunction = (name: string, cb: MockCallback) => void;

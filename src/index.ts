@@ -19,7 +19,7 @@ function nodeModulePaths(pathname: string): string[] {
 /**
  * Mocks a call to `require()`
  */
-export default function mukRequire<T = unknown>(
+function mukRequire<T = unknown>(
   filename: string,
   deps: Record<string, unknown>,
 ): T {
@@ -73,7 +73,25 @@ export default function mukRequire<T = unknown>(
   return m.exports;
 }
 
-module.exports = mukRequire;
+namespace mukRequire {
+  export type MukRequire = typeof mukRequire;
+}
+
+type MukRequireWithStatic = typeof mukRequire & {
+  mukRequire: typeof mukRequire;
+  default: typeof mukRequire;
+};
+
+const exportedMukRequire = mukRequire as MukRequireWithStatic;
+exportedMukRequire.mukRequire = exportedMukRequire;
+exportedMukRequire.default = exportedMukRequire;
+
+// Statically recognizable exports for Node.js cjs-module-lexer (ESM named import support)
+module.exports = exportedMukRequire;
+module.exports.default = exportedMukRequire;
+module.exports.mukRequire = exportedMukRequire;
+
+export = exportedMukRequire;
 
 // Delete this module from the cache so that the next time it gets
 // require()'d it will be aware of the new parent
