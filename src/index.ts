@@ -19,11 +19,9 @@ function nodeModulePaths(pathname: string): string[] {
 /**
  * Mocks a call to `require()`
  */
-// biome-ignore lint/suspicious/noExplicitAny: dynamic module exports
-export default function mukRequire<T = any>(
+export default function mukRequire<T = unknown>(
   filename: string,
-  // biome-ignore lint/suspicious/noExplicitAny: dynamic module dependencies
-  deps: Record<string, any>,
+  deps: Record<string, unknown>,
 ): T {
   filename = resolveFilename(filename, module.parent);
   // @ts-expect-error
