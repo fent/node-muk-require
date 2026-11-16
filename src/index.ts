@@ -26,48 +26,52 @@ function mukRequire<T = unknown>(
   filename = resolveFilename(filename, module.parent);
   // @ts-expect-error
   const m = new Module(filename, module.parent);
-  require.cache[filename] = m;
   m.filename = filename;
   m.paths = nodeModulePaths(path.dirname(filename));
 
-  // Load children.
   const previousCache: Record<string, Module | undefined> = {};
   const children: Record<string, Module> = {};
-  for (const key in deps) {
-    const childpath = resolveFilename(key, m);
-    previousCache[childpath] = require.cache[childpath];
-    const child = new Module(childpath, m);
-    children[childpath] = child;
-    require.cache[childpath] = child;
-    child.paths = nodeModulePaths(path.dirname(childpath));
-    child.loaded = true;
-    child.exports = deps[key];
-  }
-
-  m.require = (path) => {
-    const childpath = resolveFilename(path, m);
-    const child = children[childpath];
-    if (child) {
-      return child.exports;
-    } else {
-      // @ts-expect-error
-      return Module._load(path, m);
+  const restore = () => {
+    delete require.cache[filename];
+    for (const childpath of Object.keys(previousCache)) {
+      if (previousCache[childpath]) {
+        require.cache[childpath] = previousCache[childpath];
+      } else {
+        delete require.cache[childpath];
+      }
     }
   };
 
-  // Load module.
-  // @ts-expect-error
-  m.load(filename);
+  // Always clear mocks so failed resolutions or loads don't leak.
+  try {
+    require.cache[filename] = m;
 
-  // Clear so mocked modules can be required normally.
-  delete require.cache[filename];
-  for (const key in deps) {
-    const childpath = resolveFilename(key, m);
-    if (previousCache[childpath]) {
-      require.cache[childpath] = previousCache[childpath];
-    } else {
-      delete require.cache[childpath];
+    for (const key in deps) {
+      const childpath = resolveFilename(key, m);
+      previousCache[childpath] = require.cache[childpath];
+      const child = new Module(childpath, m);
+      children[childpath] = child;
+      require.cache[childpath] = child;
+      child.paths = nodeModulePaths(path.dirname(childpath));
+      child.loaded = true;
+      child.exports = deps[key];
     }
+
+    m.require = (path) => {
+      const childpath = resolveFilename(path, m);
+      const child = children[childpath];
+      if (child) {
+        return child.exports;
+      } else {
+        // @ts-expect-error
+        return Module._load(path, m);
+      }
+    };
+
+    // @ts-expect-error
+    m.load(filename);
+  } finally {
+    restore();
   }
 
   return m.exports;
